@@ -8,7 +8,8 @@ AFPSCharacter::AFPSCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	bUseControllerRotationYaw = false;
+	
+	bUseControllerRotationYaw = true;
 
 	// Create a First Person Camera component
 	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
@@ -38,6 +39,9 @@ AFPSCharacter::AFPSCharacter()
 
 	// The owning player doesn't see the regular (third-person) body mesh.
 	GetMesh()->SetOwnerNoSee(true);
+
+	// Necessary to make the controller rotate with mouse look
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 }
 
 // Called when the game starts or when spawned
