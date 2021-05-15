@@ -3,17 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "FPSProjectile.h"
+#include "GameFramework/Character.h"
 #include "FPSCharacter.generated.h"
 
 UCLASS()
 class FPSPROJECT_API AFPSCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
 public:
 	// Sets default values for this character's properties
 	AFPSCharacter();
@@ -21,6 +21,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class AFPSProjectile> ProjectileClass;
 
 public:	
 	// Called every frame
@@ -46,6 +49,9 @@ public:
 	UFUNCTION()
 		void StopJump();
 
+	UFUNCTION()
+		void Fire();
+
 	// FPS Camera
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
@@ -53,4 +59,7 @@ public:
 	// First-person mesh (arms) visible only to owning player
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		USkeletalMeshComponent* FPSMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		FVector MuzzleOffset; // Offset from Camera
 };
